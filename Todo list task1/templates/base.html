@@ -1,0 +1,58 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container jumbotron">
+      <h1 class="mt-4">ToDo App</h1>
+
+      <form class="form mt-4" action="/add" method="post">
+        <div>
+          <label for="title">Todo Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            placeholder="Enter Todo..."
+          />
+          <br />
+          <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+      </form>
+
+      <br/>
+      <hr />
+      
+      {% for todo in todo_list %}
+      <div class="pt-2 {% if loop.index > 1 %} mt-4 {% endif %}">
+        <h6>{{todo.id }} ) {{ todo.title }}</h6>
+        {% if todo.created_at %}
+        <small>{{todo.created_at.strftime('%Y-%h-%d')}}</small>
+        {% endif %}
+        <p>
+          Status: {% if todo.complete == False %}
+          <span class="badge p-2">On-going</span>
+          {% else %}
+          <span class="badge p-2">Done</span>
+          {% endif %}
+        </p>
+        <a
+          href="/done/{{ todo.id }}"
+          class="btn btn-sm btn-warning text-black"
+          >Mark as Done</a
+        >
+        <a href="/delete/{{ todo.id }}" class="btn btn-sm btn-danger">Delete</a>
+      </div>
+
+      {% endfor %}
+    </div>
+  </body>
+</html>
